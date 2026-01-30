@@ -1,7 +1,7 @@
 from datetime import datetime, date, time
 
-STANDARD_HOURS = 8
-HALF_DAY_HOURS = 4
+STANDARD_HOURS = 9
+HALF_DAY_HOURS = 5
 
 
 def parse_time(t):
