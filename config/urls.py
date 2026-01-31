@@ -17,9 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.employees.views_init_admin import create_superuser_once
-
-
-from apps.accounts.views import truncate_all_tables
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -28,7 +25,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/init-admin/", create_superuser_once),
-    path("api/truncate-db/", truncate_all_tables),
+    path("api/auth/", include("apps.accounts.urls")),
 
     # Auth (JWT)
     path("api/auth/login/", TokenObtainPairView.as_view(), name="token_login"),

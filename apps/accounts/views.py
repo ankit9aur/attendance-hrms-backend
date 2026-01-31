@@ -1,18 +1,17 @@
-from django.apps import apps
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework import status
+from .serializers import SignupSerializer
 
 
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def truncate_all_tables(request):
-    secret = request.data.get("secret")
+class SignupView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
-    if secret != "NUKE_DB_123":
-        return Response({"error": "Unauthorized"}, status=403)
-
-    for model in apps.get_models():
-        model.objects.all().delete()
-
-    return Response({"status": "ALL DATA DELETED"})
+    def post(self, request):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User created"}, status=201)
+        return Response(serializer.errors, status=400)
