@@ -30,7 +30,7 @@ def calculate_attendance(check_in, check_out):
 
     diff = diff_seconds / 3600
 
-    if diff >= STANDARD_HOURS:
+    if diff > HALF_DAY_HOURS:
         status = "PRESENT"
     elif diff <= HALF_DAY_HOURS:
         status = "HALF"
