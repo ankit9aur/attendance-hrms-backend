@@ -5,11 +5,12 @@ HALF_DAY_HOURS = 5
 
 
 def parse_time(t):
-    if t is None:
+    if not t:
         return None
-    if isinstance(t, time):
-        return t
-    return datetime.strptime(t, "%H:%M").time()
+    try:
+        return datetime.strptime(t, "%H:%M:%S").time()
+    except ValueError:
+        return datetime.strptime(t, "%H:%M").time()
 
 
 def calculate_attendance(check_in, check_out):
